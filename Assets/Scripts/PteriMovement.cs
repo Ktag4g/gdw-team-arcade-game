@@ -18,6 +18,12 @@ public class PteriMovement : MonoBehaviour
     int x;
     int y;
 
+    //Attack variables
+    int AOE = 2;
+    bool hasDropped = false;
+    public GameObject attackMarker;
+    public bool attacked;
+    public float timeout;
 
     // Start is called before the first frame update
     void Start()
@@ -130,6 +136,7 @@ public class PteriMovement : MonoBehaviour
             if (transform.position == newSpot)
             {
                 isGliding = false;
+                hasDropped = false;
                 Debug.Log("REACHED POSITION: new position is" + transform.position);
             }
         }
@@ -137,21 +144,33 @@ public class PteriMovement : MonoBehaviour
         //Starts Attack
         if (Input.GetKeyDown(KeyCode.LeftShift /*change for arcade*/))
         {
-            Drop();
+            if (!hasDropped && isGliding)
+            {
+                Drop();
+                hasDropped = true;
+            }
         }
 
     }
 
     void Drop()
     {
-        Vector3 dropSpot = transform.position;
-        int AOE = 3;
+        attacked = true;
+        Vector3 dropSpot = transform.position + new Vector3(0, 0, 2.4f);
 
         Vector3 attackTopRight = dropSpot + new Vector3(AOE, AOE);
         Vector3 attackBottomLeft = dropSpot + new Vector3(-AOE, -AOE);
 
         Debug.Log("ATTACKED: attacked at spot: " + dropSpot + " AOE is currently" + AOE);
         Debug.Log("AOE Attack hits area between: Top and Right: " + attackTopRight + ", Bottom and Left: " + attackBottomLeft);
+
+        Instantiate(attackMarker, dropSpot, attackMarker.transform.rotation);
+        StartCoroutine(TimeOutAttack());
+    }
+    IEnumerator TimeOutAttack()
+    {
+        yield return new WaitForSeconds(timeout);
+        attacked = false;
     }
 
     bool IsMovable(Vector3 gridSpot)
