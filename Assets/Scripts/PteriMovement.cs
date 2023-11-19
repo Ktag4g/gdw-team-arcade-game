@@ -82,7 +82,7 @@ public class PteriMovement : MonoBehaviour
         {
             ogSpot = transform.position;
             isGliding = true;
-            Debug.Log("GLIDING: Current Vector is: " + ogSpot);
+            //Debug.Log("GLIDING: Current Vector is: " + ogSpot);
         }
         if (isGliding)
         {
@@ -93,35 +93,35 @@ public class PteriMovement : MonoBehaviour
             {
                 newSpot = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
                 
-                Debug.Log("ON TOP SIDE: new spot is: " + newSpot);
+                //Debug.Log("ON TOP SIDE: new spot is: " + newSpot);
             }
             //If position is right side, glide LEFT to left side
             else if (CheckPosition(ogSpot) == 2)
             {
                 newSpot = new Vector3(-transform.position.x, transform.position.y, transform.position.z);
 
-                Debug.Log("ON RIGHT SIDE: new spot is: " + newSpot);
+                //Debug.Log("ON RIGHT SIDE: new spot is: " + newSpot);
             }
             //If position is bottom side, glide UP to top side
             else if (CheckPosition(ogSpot) == 3)
             {
                 newSpot = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
 
-                Debug.Log("ON BOTTOM SIDE: new spot is: " + newSpot);
+                //Debug.Log("ON BOTTOM SIDE: new spot is: " + newSpot);
             }
             //If position is left side, glide RIGHT to right side
             else if (CheckPosition(ogSpot) == 4)
             {
                 newSpot = new Vector3(-transform.position.x, transform.position.y, transform.position.z);
 
-                Debug.Log("ON LEFT SIDE: new spot is: " + newSpot);
+                //Debug.Log("ON LEFT SIDE: new spot is: " + newSpot);
             }
             //If in the corner, do nothing
             else if (CheckPosition(ogSpot) == 11 || CheckPosition(ogSpot) == 12
                   || CheckPosition(ogSpot) == 31 || CheckPosition(ogSpot) == 32)
             {
                 isGliding = false;
-                Debug.Log("IN CORNER: not gliding");
+                //Debug.Log("IN CORNER: not gliding");
             }
 
             //transform.Translate(Vector3.down * Time.deltaTime * speed);
@@ -137,12 +137,12 @@ public class PteriMovement : MonoBehaviour
             {
                 isGliding = false;
                 hasDropped = false;
-                Debug.Log("REACHED POSITION: new position is" + transform.position);
+                //Debug.Log("REACHED POSITION: new position is" + transform.position);
             }
         }
 
         //Starts Attack
-        if (Input.GetKeyDown(KeyCode.LeftShift /*change for arcade*/))
+        if (Input.GetKeyDown(KeyCode.RightShift /*change for arcade*/))
         {
             if (!hasDropped && isGliding)
             {
@@ -161,8 +161,8 @@ public class PteriMovement : MonoBehaviour
         Vector3 attackTopRight = dropSpot + new Vector3(AOE, AOE);
         Vector3 attackBottomLeft = dropSpot + new Vector3(-AOE, -AOE);
 
-        Debug.Log("ATTACKED: attacked at spot: " + dropSpot + " AOE is currently" + AOE);
-        Debug.Log("AOE Attack hits area between: Top and Right: " + attackTopRight + ", Bottom and Left: " + attackBottomLeft);
+        //Debug.Log("ATTACKED: attacked at spot: " + dropSpot + " AOE is currently" + AOE);
+        //Debug.Log("AOE Attack hits area between: Top and Right: " + attackTopRight + ", Bottom and Left: " + attackBottomLeft);
 
         Instantiate(attackMarker, dropSpot, attackMarker.transform.rotation);
         StartCoroutine(TimeOutAttack());
