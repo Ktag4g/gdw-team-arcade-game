@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FishMechanics : MonoBehaviour
 {
+    private GameManager gameManager;
+
     //Game board bondaries
     int BOARDBOUNDS = 9;
 
@@ -26,6 +28,8 @@ public class FishMechanics : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
         //Randomizes player start position
         do
         {
@@ -120,7 +124,7 @@ public class FishMechanics : MonoBehaviour
         if (other.gameObject.tag == "AttackAOE")
         {
             Destroy(gameObject);
-            Debug.Log("GAME OVER: Fish has been hit!");
+            gameManager.FishGameover();
         }
     }
 }
