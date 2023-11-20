@@ -15,13 +15,16 @@ Team Arcade Game for Game Design Workshop
   - Tired
 - Fish Death
 
-**Still need to do:**
-- Fix fish rotation
-
 - Title screen
 - Game Over - fish
 - Game Over - pteri
 
 - Game Timer
+
+**Still need to do:**
+- Import Sprite Assets
+
+- Fix fish rotation
+
 
 - Name for fish (IMPORTANT)
