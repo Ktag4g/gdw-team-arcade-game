@@ -16,12 +16,30 @@ public class GameManager : MonoBehaviour
     PteriMovement pteriMechanics;
     FishMechanics fishMechanics;
 
+    private void Update()
+    {
+        if (isGameActive == false)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                menuReturn();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                restartGame();
+            }
+        }
+    }
+
     private void Start()
     {
         timer = GameObject.Find("Timer").GetComponent<timer>();
 
         pteriMechanics = GameObject.Find("Pteri").GetComponent<PteriMovement>();
         fishMechanics = GameObject.Find("Fish").GetComponent<FishMechanics>();
+
+        isGameActive = true;
     }
 
     public void FishGameover()

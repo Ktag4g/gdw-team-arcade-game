@@ -86,7 +86,7 @@ public class PteriMovement : MonoBehaviour
         }
 
         //Starts Glide
-        if (Input.GetKeyDown(KeyCode.Space /*change for arcade*/))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             ogSpot = transform.position;
             isGliding = true;
@@ -154,7 +154,7 @@ public class PteriMovement : MonoBehaviour
         }
 
         //Starts Attack
-        if (Input.GetKeyDown(KeyCode.RightShift /*change for arcade*/))
+        if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             if (!hasDropped && isGliding)
             {

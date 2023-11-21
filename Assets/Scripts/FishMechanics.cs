@@ -76,7 +76,7 @@ public class FishMechanics : MonoBehaviour
         }
 
         //Dash
-        if (Input.GetKeyDown(KeyCode.LeftShift /*change for arcade*/))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             speed *= dash;
             sprite.sprite = zoomSprite;
