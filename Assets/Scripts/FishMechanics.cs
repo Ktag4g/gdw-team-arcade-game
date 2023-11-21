@@ -6,11 +6,16 @@ public class FishMechanics : MonoBehaviour
 {
     private GameManager gameManager;
 
+    //Sprite Variables
+    SpriteRenderer sprite;
+    public Sprite normalSprite;
+    public Sprite zoomSprite;
+    public Sprite tiredSprite;
+
     //Game board bondaries
     int BOARDBOUNDS = 9;
 
     //Player Position
-
     int x;
     int y;
 
@@ -29,6 +34,7 @@ public class FishMechanics : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        sprite = GameObject.Find("FishSprite").GetComponent<SpriteRenderer>();
 
         //Randomizes player start position
         do
@@ -49,23 +55,6 @@ public class FishMechanics : MonoBehaviour
         //Move Player Horizontally
         verticalInput = Input.GetAxis("Vertical");
         transform.Translate(Vector3.up * verticalInput * Time.deltaTime * speed);
-
-        /*if (horizontalInput > 0)
-        {
-            transform.Rotate(0, 0, 90);
-        }
-        if (horizontalInput < 0)
-        {
-            transform.Rotate(0, 0, -90);
-        }
-        if (verticalInput > 0)
-        {
-            transform.Rotate(0, 0, 0);
-        }
-        if (verticalInput < 0)
-        {
-            transform.Rotate(0, 0, 180);
-        }*/
 
         //Horizontal Movement Boundaries
         if (transform.position.x < -BOARDBOUNDS)
@@ -90,6 +79,7 @@ public class FishMechanics : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift /*change for arcade*/))
         {
             speed *= dash;
+            sprite.sprite = zoomSprite;
             StartCoroutine(TimeOutDash());
         }
     }
@@ -98,12 +88,14 @@ public class FishMechanics : MonoBehaviour
     {
         yield return new WaitForSeconds(dashTime);
         speed /= rest;
+        sprite.sprite = tiredSprite;
         StartCoroutine(TimeOutRest());
     }
     IEnumerator TimeOutRest()
     {
         yield return new WaitForSeconds(restTime);
         speed *= rest / 2;
+        sprite.sprite = normalSprite;
     }
 
     bool IsMovable(Vector3 newSpot)

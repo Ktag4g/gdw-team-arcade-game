@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PteriMovement : MonoBehaviour
 {
+    //Sprite Variables
+    SpriteRenderer sprite;
+    public Sprite flapSprite;
+    public Sprite glideSprite;
+    
     //Game board boundaries
     int BOARDBOUNDS = 10;
 
@@ -28,6 +33,8 @@ public class PteriMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
+
         //Randomizes player start position
         do
         {
@@ -36,6 +43,7 @@ public class PteriMovement : MonoBehaviour
         }
         while (IsMovable(new Vector3(x, y, playerHeight)) == false);
         gameObject.transform.position = new Vector3(x, y, playerHeight);
+        updateSprite(transform.position);
     }
 
     // Update is called once per frame
@@ -82,6 +90,8 @@ public class PteriMovement : MonoBehaviour
         {
             ogSpot = transform.position;
             isGliding = true;
+
+            sprite.sprite = glideSprite;
             //Debug.Log("GLIDING: Current Vector is: " + ogSpot);
         }
         if (isGliding)
@@ -130,6 +140,7 @@ public class PteriMovement : MonoBehaviour
             if (!isGliding)
             {
                 transform.position = ogSpot;
+                sprite.sprite = flapSprite;
             }
 
             //Once in position, stop gliding
@@ -137,6 +148,7 @@ public class PteriMovement : MonoBehaviour
             {
                 isGliding = false;
                 hasDropped = false;
+                sprite.sprite = flapSprite;
                 //Debug.Log("REACHED POSITION: new position is" + transform.position);
             }
         }
@@ -151,6 +163,31 @@ public class PteriMovement : MonoBehaviour
             }
         }
 
+        updateSprite(transform.position);
+    }
+
+    void updateSprite(Vector3 position)
+    {
+        //If position is top side, look down
+        if (CheckPosition(position) == 1)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 180);
+        }
+        //If position is right side, look left
+        else if (CheckPosition(position) == 2)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90);
+        }
+        //If position is bottom side, look up
+        else if (CheckPosition(position) == 3)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        //If position is left side, look right
+        else if (CheckPosition(position) == 4)
+        {
+            transform.eulerAngles = new Vector3(0, 0, -90);
+        }
     }
 
     void Drop()
